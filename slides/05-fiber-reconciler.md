@@ -1,5 +1,8 @@
 ## Fiber Reconciler
 
+
+## Fiber Reconciler
+
 - Tries to solve problems in stack reconciler and long-standing issues
 
 - Aims to make common use cases faster
@@ -14,7 +17,7 @@ Note: uses heap objects instead of a stack - allows reusing in future updates an
 
 ## Fiber Reconciler
 Test it changing a flag in React repo `useFiber: true`
-  - [src/renderers/dom/shared/ReactDOMFeatureFlags.js#L16](https://github.com/facebook/react/blob/master/src/renderers/dom/shared/ReactDOMFeatureFlags.js#L16)
+  - [/src/renderers/dom/shared/ReactDOMFeatureFlags.js#L16](https://github.com/facebook/react/blob/master/src/renderers/dom/shared/ReactDOMFeatureFlags.js#L16)
 
 
 ### Major improvements
@@ -23,13 +26,11 @@ Test it changing a flag in React repo `useFiber: true`
 - error support
 
 
-## Fiber Reconciler
+<img src="./slides/images/fiber-reconciler.png" class="common" />
+Note: Reconciler asks "What's changed?" ==== (fiber output) ===> render app (with changed info)
 
-Reconciler asks "What's changed?" ==== (fiber output) ===> render app (with changed info)
 
-
-- ReactDOM
-- React Native
+<img src="./slides/images/dom-vs-native.png" class="common" />
 
 > different renderers, same reconciler
 
@@ -52,7 +53,21 @@ Note: delay computations if necessary; priorities; offscreen vs not offscreen (e
 
 ### GOAL: 60 fps
 
-[src/renderers/shared/fiber/ReactPriorityLevel.js](https://github.com/facebook/react/blob/master/src/renderers/shared/fiber/ReactPriorityLevel.js)
+```js
+export type PriorityLevel = 0 | 1 | 2 | 3 | 4 | 5 | 6;
+
+module.exports = {
+  NoWork: 0,
+  SynchronousPriority: 1,
+  TaskPriority: 2,
+  AnimationPriority: 3,
+  HighPriority: 4,
+  LowPriority: 5,
+  OffscreenPriority: 6,
+};
+```
+
+[(*from* /src/renderers/shared/fiber/ReactPriorityLevel.js)](https://github.com/facebook/react/blob/master/src/renderers/shared/fiber/ReactPriorityLevel.js)
 Note: avoid dropping frames; React must be capable of deciding what is important to occur first; ReactPriorityLevel - less value => higher priority
 
 
@@ -61,6 +76,8 @@ Note: avoid dropping frames; React must be capable of deciding what is important
 
 - `requestAnimationFrame()`
 
+[/src/renderers/dom/fiber/ReactDOMFiber.js#L147-L149](https://github.com/facebook/react/blob/master/src/renderers/dom/fiber/ReactDOMFiber.js#L147-L149)
+
 Note: requestIdleCallback() - schedules low priority functions to be called in a idle period; requestAnimationFrame() - schedules high priority functions to be called on the next automation frame
 
 
@@ -68,10 +85,12 @@ Note: requestIdleCallback() - schedules low priority functions to be called in a
 - Unit of work
 - JS object
 
-Note: fiber has inputs, outputs and the component information; Fiber Reconciliation reimplements the stack by having in-memory stack frames
+Note: fiber has information about the component; Fiber Reconciliation reimplements the stack by having in-memory stack frames
 
 
 ### Fiber Fields
+
+[/src/renderers/shared/fiber/ReactFiber.js#L46-L146](https://github.com/facebook/react/blob/master/src/renderers/shared/fiber/ReactFiber.js#L46-L146)
 
 
 ### Fiber Fields
@@ -117,4 +136,4 @@ Note: current flushed fiber OR work in progress fiber (one is alternate of the o
 ### Fiber Fields
 - output
 
-Note: it's the return value of a function, only at leaf nodes <p>, <span>, <div>, ... (only for platform-specific/host components); renderer defines how output is created and updated
+Note: it's the return value of a function, only at leaf nodes `<p>, <span>, <div>,` ... (only for platform-specific/host components); renderer defines how output is created and updated

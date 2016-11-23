@@ -2,11 +2,15 @@
 
 
 ### (follow) Who is working on it
-- Sebastian Markbåge @sebmarkbage
-- Dan Abramov @dan_abramov
-- Andrew Clark @acdlite
-- Ben Alpert @soprano
-- community <3
+Sebastian Markbåge [@sebmarkbage](https://twitter.com/sebmarkbage)
+
+Dan Abramov [@dan_abramov](https://twitter.com/dan_abramov)
+
+Andrew Clark [@acdlite](https://twitter.com/acdlite)
+
+Ben Alpert [@soprano](https://twitter.com/soprano)
+
+community <img src="./slides/images/heart.png" style="border:none;box-shadow:none" />... it can be you!
 
 
 - [Fiber Principles: Contributing To Fiber](https://github.com/facebook/react/issues/7942) - Sebastian Markbåge
@@ -34,4 +38,17 @@
 
 **477 tests failing** (Nov, 15)
 
+<img src="./slides/images/tests-november-15.png" />
+
+**81 tests failing** (Nov, 26)
+
 **? tests failing** (Dec, 6)
+
+[http://isfiberreadyyet.com/](http://isfiberreadyyet.com/)
+
+
+[/scripts/fiber](https://github.com/facebook/react/tree/master/scripts/fiber)
+- tests-failing.txt
+- tests-passing.txt
+
+Note: scripts that keep track of tests that are passing and failing

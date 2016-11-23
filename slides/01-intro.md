@@ -1,7 +1,7 @@
 <img src="./slides/images/react-logo.png" class="logo"/>
 
 ## React Fiber
-Daniela Matos de Carvalho (@sericaia)
+Daniela Matos de Carvalho ([@sericaia](https://twitter.com/sericaia))
 
 Dec, 6th - [reactivate.london](https://reactivate.london/)
 

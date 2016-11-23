@@ -23,8 +23,10 @@ Note: tree is not exposed to the user
 <div>
 ```
 
+<img src="./slides/images/view-div.png" class="logo" />
+
 - e.g ReactDOM
-  - [src/renderers/dom/stack/client/ReactDOMComponent.js](https://github.com/facebook/react/tree/master/src/renderers/dom/stack/client/ReactDOMComponent.js)
+  - [/src/renderers/dom/stack/client/ReactDOMComponent.js](https://github.com/facebook/react/tree/master/src/renderers/dom/stack/client/ReactDOMComponent.js)
 
 - ReactMultiChild helper
 
@@ -32,15 +34,14 @@ Note: e.g React DOM instructs the stack reconciler to use ReactDOMComponent to h
 
 
 ### Composite components (or *user defined*)
+
+<img src="./slides/images/usersheader-searchbar.png" class="logo" />
+
 - Same behaviour in all renderers
   - [.../stack/reconciler/ReactCompositeComponent.js](https://github.com/facebook/react/blob/master/src/renderers/shared/stack/reconciler/ReactCompositeComponent.js)
 - User code
-- update() => render() => diff type or key?
-  - YES
-    - unmounts old child
-    - mounts new child
-  - NO
-    - update performed by child internal instance
+
+<img src="./slides/images/simple-reconciliation-stack.png" class="logo" />
 
 
 ### Stack Reconciler recursion
