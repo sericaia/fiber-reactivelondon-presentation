@@ -8,16 +8,8 @@
 - Aims to make common use cases faster
 
 - Complete **rewrite** of the Reconciler
-  - uses heap objects instead of a stack
 
 - In dev/experimental
-
-Note: uses heap objects instead of a stack - allows reusing in future updates and yielding to the event loop, without losing any in progress data
-
-
-## Fiber Reconciler
-Test it changing a flag in React repo `useFiber: true`
-  - [/src/renderers/dom/shared/ReactDOMFeatureFlags.js#L16](https://github.com/facebook/react/blob/master/src/renderers/dom/shared/ReactDOMFeatureFlags.js#L16)
 
 
 ### Major improvements
@@ -28,11 +20,6 @@ Test it changing a flag in React repo `useFiber: true`
 
 <img src="./slides/images/fiber-reconciler.png" class="common" />
 Note: Reconciler asks "What's changed?" ==== (fiber output) ===> render app (with changed info)
-
-
-<img src="./slides/images/dom-vs-native.png" class="common" />
-
-> different renderers, same reconciler
 
 
 ### **Incremental** rendering
@@ -48,12 +35,16 @@ Note: chunks; multiple frames; means rendering part of the virtualDOM in one cyc
 - When?
 - Which computations are more relevant?
 
-Note: delay computations if necessary; priorities; offscreen vs not offscreen (e.g user clicks a button)
+Note: - delay computations if necessary;
+- priorities;
+- offscreen vs not offscreen (e.g user clicks a button)
 
 
 ### GOAL: 60 fps
 
 ```js
+// src/renderers/shared/fiber/ReactPriorityLevel.js
+
 export type PriorityLevel = 0 | 1 | 2 | 3 | 4 | 5 | 6;
 
 module.exports = {
@@ -67,30 +58,59 @@ module.exports = {
 };
 ```
 
-[(*from* /src/renderers/shared/fiber/ReactPriorityLevel.js)](https://github.com/facebook/react/blob/master/src/renderers/shared/fiber/ReactPriorityLevel.js)
-Note: avoid dropping frames; React must be capable of deciding what is important to occur first; ReactPriorityLevel - less value => higher priority
+Note: avoid dropping frames; React must be capable of deciding what is important to occur first; ReactPriorityLevel - less value => higher priority;
+- NoWork = default value when fiber is created, no work pending, or set when work finished
 
 
 ### How to achieve that goal?
-- `requestIdleCallback()`
-
 - `requestAnimationFrame()`
+
+- `requestIdleCallback()`
 
 [/src/renderers/dom/fiber/ReactDOMFiber.js#L147-L149](https://github.com/facebook/react/blob/master/src/renderers/dom/fiber/ReactDOMFiber.js#L147-L149)
 
-Note: requestIdleCallback() - schedules low priority functions to be called in a idle period; requestAnimationFrame() - schedules high priority functions to be called on the next automation frame
+Note: - requestAnimationFrame() - schedules high priority functions to be called on the next automation frame;
+- requestIdleCallback() - schedules low priority functions to be called in a idle period;
 
 
 ### What is a Fiber?
 - Unit of work
 - JS object
 
-Note: fiber has information about the component; Fiber Reconciliation reimplements the stack by having in-memory stack frames
+Note: Fiber has information about the component;
 
 
 ### Fiber Fields
 
-[/src/renderers/shared/fiber/ReactFiber.js#L46-L146](https://github.com/facebook/react/blob/master/src/renderers/shared/fiber/ReactFiber.js#L46-L146)
+<img src="./slides/images/fiber-fields.gif" />
+
+([*from* /src/renderers/shared/fiber/ReactFiber.js#L46-L143](https://github.com/facebook/react/blob/master/src/renderers/shared/fiber/ReactFiber.js#L46-L143))
+
+
+### Fiber Fields
+- tag
+
+```js
+// src/renderers/shared/fiber/ReactTypeOfWork.js
+
+export type TypeOfWork = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10;
+
+module.exports = {
+  IndeterminateComponent: 0,
+  FunctionalComponent: 1,
+  ClassComponent: 2,
+  HostContainer: 3,
+  HostComponent: 4,
+  HostText: 5,
+  CoroutineComponent: 6,
+  CoroutineHandlerPhase: 7,
+  YieldComponent: 8,
+  Fragment: 9,
+  Portal: 10,
+};
+```
+
+Note: Tag identifying the type of fiber.
 
 
 ### Fiber Fields
@@ -98,7 +118,8 @@ copied from the element:
 - type
 - key
 
-Note: type - to understand if it's a composite component (type = function/class) or host component (type = string); key - to understand if it should be reused;
+Note: - type - to understand if it's a composite component (type = function/class) or host component (type = string);
+- key - to understand if it should be reused;
 
 
 ### Fiber Fields
@@ -118,22 +139,25 @@ Note: next fiber or parent fiber
 - pendingProps
 - memoizedProps
 
-Note: pendingProps - set at the beginning of execution; memoizedProps - set at the end; (if pending === momoized, output can be reused)
+Note: - pendingProps - set at the beginning of execution;
+- memoizedProps - set at the end;
+- (if pending === momoized, output can be reused)
+
+
+### Fiber Fields
+- stateNode
+
+Note: The local state associated with this fiber
 
 
 ### Fiber Fields
 - pendingWorkPriority
 
-Note: Priorities we just saw in ReactPriorityLevel.js; helps to answer the question "What to pick next?"
+Note: - Priorities we just saw in ReactPriorityLevel.js; 
+- helps to answer the question "What to pick next?"
 
 
 ### Fiber Fields
 - alternate
 
 Note: current flushed fiber OR work in progress fiber (one is alternate of the other); implementation detail
-
-
-### Fiber Fields
-- output
-
-Note: it's the return value of a function, only at leaf nodes `<p>, <span>, <div>,` ... (only for platform-specific/host components); renderer defines how output is created and updated

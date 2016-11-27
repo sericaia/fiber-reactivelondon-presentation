@@ -5,8 +5,10 @@
 - Used by ReactDOM and React Native
 
 - Produces a tree of **internal instances** of React Components
-  - composite components (or *user defined*)
-  - platform specific (or *host*)
+  <!-- - composite components (or *user defined*)
+  - platform specific (or *host*) -->
+
+<img src="./slides/images/internal-instances.png" class="common" />
 
 Note: tree is not exposed to the user
 
@@ -16,15 +18,17 @@ Note: tree is not exposed to the user
 - updates => `receiveComponent(element)`
 - unmounts => `unmountComponent(element)`
 
+Note: When a component mounts, updates, or unmounts, the stack reconciler calls these method on that internal instance.
 
-### Platform specific (or *host*)
+
+### Platform specific
 ```
-<View>
-<div>
+<View></View>
+<div></div>
 ```
 
-<img src="./slides/images/view-div.png" class="logo" />
 
+### Platform specific
 - e.g ReactDOM
   - [/src/renderers/dom/stack/client/ReactDOMComponent.js](https://github.com/facebook/react/tree/master/src/renderers/dom/stack/client/ReactDOMComponent.js)
 
@@ -33,15 +37,20 @@ Note: tree is not exposed to the user
 Note: e.g React DOM instructs the stack reconciler to use ReactDOMComponent to handle mounting, updates, and unmounting of DOM components; ReactMultiChild handles children in a similar way (used by ReactDOM and ReactNative)
 
 
-### Composite components (or *user defined*)
+### Composite components
 
-<img src="./slides/images/usersheader-searchbar.png" class="logo" />
+```
+<UsersHeader></UsersHeader>
+<SearchBar></SearchBar>
+```
 
 - Same behaviour in all renderers
   - [.../stack/reconciler/ReactCompositeComponent.js](https://github.com/facebook/react/blob/master/src/renderers/shared/stack/reconciler/ReactCompositeComponent.js)
 - User code
 
-<img src="./slides/images/simple-reconciliation-stack.png" class="logo" />
+
+### Composite components
+<img src="./slides/images/simple-reconciliation-stack.png" class="common" />
 
 
 ### Stack Reconciler recursion

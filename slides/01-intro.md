@@ -8,17 +8,20 @@ Dec, 6th - [reactivate.london](https://reactivate.london/)
 
 ## About me
 
+<!-- <img src="./slides/images/twitter.png" style="height:50px" /><img src="./slides/images/github.png"  style="height:50px" /> -->
+
 ```js
 class Daniela extends React.Developer {
   YLD() {}
+  requirelx() {}
   hapijs() {}
   photography() {}
   origami() {}
   socialNetworks() {
     return (
       <div>
-        <Github tag="sericaia" />
-        <Twitter tag="@sericaia" />
+        <Github handle="sericaia" />
+        <Twitter handle="@sericaia" />
       </div>
     );
   }
