@@ -12,8 +12,11 @@
 - In dev/experimental
 
 
-### Major improvements
-- pause and resume
+### Major improvement
+
+**pause and resume**
+
+but also...
 - return multiple things in `render()`
 - error support
 
@@ -126,18 +129,17 @@ Note: - type - to understand if it's a composite component (type = function/clas
 - child
 - sibling
 
+```
+render() {
+  return [<Navigation />, <SearchBar />];
+}
+```
 Note: with fiber we can return multiple children (new feature)
 
 
 ### Fiber Fields
-- return
-
-Note: next fiber or parent fiber
-
-
-### Fiber Fields
-- pendingProps
-- memoizedProps
+- pending*Props*
+- memoized*Props*
 
 Note: - pendingProps - set at the beginning of execution;
 - memoizedProps - set at the end;
@@ -145,7 +147,7 @@ Note: - pendingProps - set at the beginning of execution;
 
 
 ### Fiber Fields
-- stateNode
+- *state*Node
 
 Note: The local state associated with this fiber
 
@@ -153,7 +155,23 @@ Note: The local state associated with this fiber
 ### Fiber Fields
 - pendingWorkPriority
 
-Note: - Priorities we just saw in ReactPriorityLevel.js; 
+```js
+// src/renderers/shared/fiber/ReactPriorityLevel.js
+
+export type PriorityLevel = 0 | 1 | 2 | 3 | 4 | 5 | 6;
+
+module.exports = {
+  NoWork: 0,
+  SynchronousPriority: 1,
+  TaskPriority: 2,
+  AnimationPriority: 3,
+  HighPriority: 4,
+  LowPriority: 5,
+  OffscreenPriority: 6,
+};
+```
+
+Note: - Priorities we just saw in ReactPriorityLevel.js;
 - helps to answer the question "What to pick next?"
 
 

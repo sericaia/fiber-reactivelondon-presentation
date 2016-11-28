@@ -64,6 +64,8 @@ Note: Test it changing a flag in React repo
 - tests-failing.txt
 - tests-passing.txt
 
+<img src="./slides/images/scripts-preview.png" />
+
 Note: scripts that keep track of tests that are passing and failing
 
 
@@ -79,8 +81,13 @@ Note: scripts that keep track of tests that are passing and failing
 
 - Fiber has almost no documentation
 
+<img src="./slides/images/fiber-architecture.png" />
+(*from* [https://github.com/acdlite/react-fiber-architecture](https://github.com/acdlite/react-fiber-architecture))
+
+Note: No docs - you have to search a lot in code
+
+
+### Limitations
 - Lots of TODOs and questions inside the codebase
 <img src="./slides/images/isthisright.png" />
 (*from* [/src/renderers/shared/fiber/ReactFiberBeginWork.js#L474](https://github.com/facebook/react/blob/7d2be2c9a7b4a976e20d2d7c312b43b1bee01a07/src/renderers/shared/fiber/ReactFiberBeginWork.js#L474))
-
-Note: No docs - you have to search a lot in code

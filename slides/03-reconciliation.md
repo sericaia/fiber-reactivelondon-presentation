@@ -13,26 +13,24 @@ Aims to **efficiently** update UI to match tree updates
 Note: props, state, for example
 
 
-#### ReactDOM and React Native
-- renderers share code & logic
+### Renderers
+
+<img src="./slides/images/dom-vs-native.png" style="border-color: white; " />
+
+
+### Renderers
+#### (ReactDOM and React Native)
+- share code & logic
 - cross-platform consistency
 
-Note: reconcilers are not packaged separately, they are in renderers such as ReactDOM and ReactNative
-
-
-<img src="./slides/images/dom-vs-native.png" class="common" />
-
 > different renderers, same reconciler
+
+Note: reconcilers are not packaged separately, they are in renderers such as ReactDOM and ReactNative
 
 
 <img src="./slides/images/reconciler-job.png" class="common"/>
 
 Note: setState() => reconciler calls render()
-
-
-### Reconcilers
-- Stack reconciler
-- Fiber reconciler
 
 
 ## Why is React fast?
@@ -59,30 +57,39 @@ Note: dirty due to setState(); rerendered
 
 ### Reconciliation Algorithm
 *compares*
-1. Elements w/ different type
+1. (Elements || Component Elements) w/ different type
 
 2. DOM elements w/ same type
 
 3. Component Elements w/ same type
 
-4. Component Elements w/ different type
-
 
 #### Reconciliation Algorithm
-`1.` Elements w/ different type
+`1.` (Elements || Component Elements) w/ **different** type
+```
+<p></p>
+<div></div>
+```
+OR
 ```
 <SearchBar></SearchBar>
 <div></div>
+```
+OR
+```
+<SearchBar></SearchBar>
+<Navigation></Navigation>
 ```
 
 Note: - full rebuild;
 - old components destroyed (componentWillUnmount());
 - new components created (componentWillMount(), componentDidMount());
 - old state is LOST
+- if(do not match && components are similar) we may want them to be the same
 
 
 #### Reconciliation Algorithm
-`2.` DOM elements w/ same type
+`2.` DOM elements w/ **same** type
 ```
 <div></div>
 <div></div>
@@ -94,7 +101,7 @@ Note: - looks into attrs; only attrs are updated;
 
 
 #### Reconciliation Algorithm
-`3.` Component Elements w/ same type
+`3.` Component Elements w/ **same** type
 ```
 <SearchBar></SearchBar>
 <SearchBar></SearchBar>
@@ -104,21 +111,6 @@ Note: - state is maintained across renders;
 - props are updated (componentWillReceiveProps(), componentWillUpdate())
 
 
-#### Reconciliation Algorithm
-`4.` Component Elements w/ different type
-```
-<SearchBar></SearchBar>
-<Navigation></Navigation>
-```
-
-Note: - do not match; 
-- if components are similar, we may want them to be the same
-
-
-#### Reconciliation Algorithm
-Performance concerns
-- adding to the end of a list has typically better performance
-
-<img src="./slides/images/list.png" class="logo" />
-
-Note: adding to the top makes React mutate every child if we dont use KEYS (unique Ids)
+### Reconcilers
+- Stack reconciler
+- Fiber reconciler

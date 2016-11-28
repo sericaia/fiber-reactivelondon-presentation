@@ -1,14 +1,26 @@
+### Fiber is an experiment
+
+<img src="./slides/images/cat-astrophe.jpg" />
+
+Note: - aims to be the next version of React;
+- Since 2014
+- BSD License = public domain, may be modified without restrictions; may be used in proprietary products; manually patent grant and trademark grant
+
+
+## Agenda
+- Motivation
+- Reconciliation
+  - Stack reconciler
+- Fiber reconciler
+- How to contribute
+- Side notes
+
+
 ## Motivation
 
-Note: improve most common cases
 
+### React is fast
 
-## Fiber is an experiment
+#### ... but not always!
 
-Note: aims to be the next version of React
-
-
-- Since 2014
-- BSD License
-
-Note: BSD = public domain, may be modified without restrictions; may be used in proprietary products; manually patent grant and trademark grant
+Note: Fiber wants to improve most common cases (e.g load one thousand articles)
