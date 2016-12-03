@@ -13,7 +13,8 @@ Note: - shouldComponentUpdate() triggered before the re-rendering start;
 ### Side notes
 Component Profiling ([since v15.4.0](https://facebook.github.io/react/blog/2016/11/16/react-v15.4.0.html#profiling-components-with-chrome-timeline))
 
-<img src="./slides/images/react-newsletter.png" class="common" />
+<!-- <img src="./slides/images/react-newsletter.png" class="common" /> -->
+<img src="./slides/images/mount-update-render.gif" class="common" />
 
 Check [blog.yld.io](https://blog.yld.io)!
 

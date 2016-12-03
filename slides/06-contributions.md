@@ -23,6 +23,13 @@ community <img src="./slides/images/heart.png" style="border:none;box-shadow:non
 <img src="./slides/images/core-notes.png" />
 
 
+[React Core Meeting Notes](https://github.com/reactjs/core-notes)
+"Fiber Kinda Works"
+<img src="./slides/images/fiber-kinda-works.gif" />
+
+Note: last week react core team started using Fiber in production
+
+
 [How to Help](https://github.com/facebook/react/issues/7925?utm_campaign=React%2BNewsletter&utm_medium=email&utm_source=React_Newsletter_51#issuecomment-259258900) - Dan Abramov
 
 <img src="./slides/images/how-to-help.png" />
@@ -69,12 +76,23 @@ Note: Test it changing a flag in React repo
 Note: scripts that keep track of tests that are passing and failing
 
 
+## Limitations
+
+
 ### Limitations
 
 - [requestIdleCallback()](https://developer.mozilla.org/en-US/docs/Web/API/Window/requestIdleCallback) not implemented in every browser
 <img src="./slides/images/requestIdleCallback-mozilla.png" />
 
 (*from* [https://developer.mozilla.org/en-US/docs/Web/API/Window/requestIdleCallback](https://developer.mozilla.org/en-US/docs/Web/API/Window/requestIdleCallback))
+
+
+### Limitations
+
+- componentWillMount() may be deprecated
+
+(*from* [https://github.com/facebook/react/issues/7671](https://github.com/facebook/react/issues/7671))
+Note: due to pause and resume
 
 
 ### Limitations

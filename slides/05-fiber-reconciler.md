@@ -43,8 +43,6 @@ Note: - delay computations if necessary;
 - offscreen vs not offscreen (e.g user clicks a button)
 
 
-### GOAL: 60 fps
-
 ```js
 // src/renderers/shared/fiber/ReactPriorityLevel.js
 
@@ -61,8 +59,13 @@ module.exports = {
 };
 ```
 
-Note: avoid dropping frames; React must be capable of deciding what is important to occur first; ReactPriorityLevel - less value => higher priority;
+Note: - ReactPriorityLevel - less value => higher priority;
 - NoWork = default value when fiber is created, no work pending, or set when work finished
+
+
+### GOAL: 60 fps
+
+Note: avoid dropping frames; React must be capable of deciding what is important to occur first;
 
 
 ### How to achieve that goal?
@@ -113,7 +116,8 @@ module.exports = {
 };
 ```
 
-Note: Tag identifying the type of fiber.
+Note: - Tag identifying the type of fiber.
+- used when scheduler has to beginWork, completeWork or commitWork (update lifecyle, set props, etc...)
 
 
 ### Fiber Fields
@@ -135,21 +139,6 @@ render() {
 }
 ```
 Note: with fiber we can return multiple children (new feature)
-
-
-### Fiber Fields
-- pending*Props*
-- memoized*Props*
-
-Note: - pendingProps - set at the beginning of execution;
-- memoizedProps - set at the end;
-- (if pending === momoized, output can be reused)
-
-
-### Fiber Fields
-- *state*Node
-
-Note: The local state associated with this fiber
 
 
 ### Fiber Fields
