@@ -4,6 +4,7 @@
   - Stack reconciler
 - Fiber reconciler
 - How to contribute
+- Limitations
 - Side notes
 
 

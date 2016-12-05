@@ -9,7 +9,7 @@
 <img src="./slides/images/internal-instances.png" class="common" />
 
 Note: - current implementation of the algorithm;
-- DOM tree is not exposed to the developer;
+- tree is not exposed to the developer;
 
 
 ### Stack Reconciler

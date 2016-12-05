@@ -105,14 +105,14 @@ module.exports = {
   IndeterminateComponent: 0,
   FunctionalComponent: 1,
   ClassComponent: 2,
-  HostContainer: 3,
-  HostComponent: 4,
-  HostText: 5,
-  CoroutineComponent: 6,
-  CoroutineHandlerPhase: 7,
-  YieldComponent: 8,
-  Fragment: 9,
-  Portal: 10,
+  HostRoot: 3,
+  HostPortal: 4,
+  HostComponent: 5,
+  HostText: 6,
+  CoroutineComponent: 7,
+  CoroutineHandlerPhase: 8,
+  YieldComponent: 9,
+  Fragment: 10,
 };
 ```
 
@@ -162,9 +162,48 @@ module.exports = {
 
 Note: - Priorities we just saw in ReactPriorityLevel.js;
 - helps to answer the question "What to pick next?"
+- The priority of a fiber is **greater than or equal to the priority of all its descendent** fibers.
+- If a tree has pending work priority, its root is scheduled.
+
+
+### Fiber Fields
+- effectTag
+
+```js
+// src/renderers/shared/fiber/ReactTypeOfSideEffect.js
+export type TypeOfSideEffect = 0 | 1 | 2 | 3 | 4 | 8 | 16 | 32;
+
+module.exports = {
+  NoEffect: 0,
+  Placement: 1,
+  Update: 2,
+  PlacementAndUpdate: 3,
+  Deletion: 4,
+  ContentReset: 8,
+  Callback: 16,
+  Err: 32,
+};
+```
+
+Note: - side effects when work is being commited by the scheduler.
+- commitDeletion: Recursively delete all host nodes from the parent.
+- When work is commited: (1) First, we'll perform all the host insertions, updates, deletions and ref unmounts. (2) we'll perform all life-cycles and ref callbacks. Life-cycles happens as a separate pass so that all effects in the entire tree have already been invoked.
 
 
 ### Fiber Fields
 - alternate
 
 Note: current flushed fiber OR work in progress fiber (one is alternate of the other); implementation detail
+
+
+## Fiber Conclusions
+
+- Each fiber has information about a component
+
+- A component may have more than one fiber
+
+- Fibers have priorities, types of work and side effects
+
+- Fiber work may be paused and resumed
+
+- Scheduler controls everything
